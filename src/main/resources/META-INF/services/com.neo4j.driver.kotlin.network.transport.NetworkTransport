@@ -1,0 +1,4 @@
+com.neo4j.driver.kotlin.network.transport.NioNetworkTransport
+
+com.neo4j.driver.kotlin.network.transport.EpollNetworkTransport
+com.neo4j.driver.kotlin.network.transport.KQueueNetworkTransport

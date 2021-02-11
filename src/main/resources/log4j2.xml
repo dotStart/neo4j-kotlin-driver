@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: I should not be here ... -->
+<Configuration status="WARN">
+    <Properties>
+        <Property name="CONSOLE_LOG_PATTERN">
+            <![CDATA[%style{[%d{HH:mm:ss}]}{dim,blue} %style{[%25.25t]}{dim,cyan} %highlight{[%level]}: %highlight{%msg}%n]]></Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${CONSOLE_LOG_PATTERN}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+
+        <Logger name="io.netty" level="error">
+            <AppenderRef ref="Console" />
+        </Logger>
+    </Loggers>
+</Configuration>
