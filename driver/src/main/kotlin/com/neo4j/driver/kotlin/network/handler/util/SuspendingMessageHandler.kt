@@ -4,7 +4,6 @@ import com.neo4j.driver.kotlin.error.DriverConnectionException
 import com.neo4j.driver.kotlin.util.getUnwrapped
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
-import kotlinx.coroutines.future.await
 import java.util.concurrent.CompletableFuture
 import kotlin.reflect.KClass
 
