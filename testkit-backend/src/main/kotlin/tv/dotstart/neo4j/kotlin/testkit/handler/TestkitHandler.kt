@@ -94,6 +94,20 @@ class TestkitHandler : AbstractMappedChannelInboundHandler() {
     }
 
     @CommandHandler
+    fun handleDriverClose(ctx: ChannelHandlerContext, msg: DriverCloseCommand) {
+        val driverId = msg.driverId
+            .toInt(10)
+
+        val driver = this.driverInstances.remove(driverId)
+            ?: throw IllegalArgumentException("Illegal driver instance: $driverId")
+
+        logger.info("Closing driver $driverId")
+        driver.close()
+
+        ctx.writeAndFlush(CommandResponse(DriverCommandResponse(driver.toString())))
+    }
+
+    @CommandHandler
     fun handleNewSession(ctx: ChannelHandlerContext, msg: NewSessionCommand) {
         val driverId = msg.driverId
             .toInt(10)
