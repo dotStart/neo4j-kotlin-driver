@@ -6,10 +6,7 @@ import io.netty.channel.ChannelHandlerContext
 import org.apache.logging.log4j.LogManager
 import tv.dotstart.neo4j.kotlin.testkit.handler.annotation.CommandHandler
 import tv.dotstart.neo4j.kotlin.testkit.message.auth.CommonAuthorizationParameters
-import tv.dotstart.neo4j.kotlin.testkit.message.command.NewDriverCommand
-import tv.dotstart.neo4j.kotlin.testkit.message.command.NewSessionCommand
-import tv.dotstart.neo4j.kotlin.testkit.message.command.SessionCloseCommand
-import tv.dotstart.neo4j.kotlin.testkit.message.command.SessionRunCommand
+import tv.dotstart.neo4j.kotlin.testkit.message.command.*
 import tv.dotstart.neo4j.kotlin.testkit.message.response.*
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -23,7 +20,7 @@ class TestkitHandler : AbstractMappedChannelInboundHandler() {
 
     private val driverInstances = mutableMapOf<Int, Driver>()
     private val connectionInstances = mutableMapOf<Int, BoltProtocol>()
-    private val results = mutableMapOf<Int, List<Map<String, Any?>>>()
+    private val results = mutableMapOf<Int, MutableList<Map<String, Any?>>>()
 
     override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
         if (cause is OperationAbortedException) {
@@ -125,7 +122,7 @@ class TestkitHandler : AbstractMappedChannelInboundHandler() {
         val result = this.invokeDriver(ctx) { connection.run(msg.cypher, msg.parameters ?: emptyMap()) }
 
         logger.info("Allocated result $nextId for connection $connectionId")
-        this.results[nextId] = result
+        this.results[nextId] = result.toMutableList()
 
         ctx.writeAndFlush(CommandResponse(SessionRunCommandResponse(nextId.toString())))
     }
@@ -142,6 +139,23 @@ class TestkitHandler : AbstractMappedChannelInboundHandler() {
         logger.info("Closed connection $connectionId")
 
         ctx.writeAndFlush(CommandResponse(SessionCommandResponse(connectionId.toString())))
+    }
+
+    @CommandHandler
+    fun handleNextResult(ctx: ChannelHandlerContext, msg: NextResultCommand) {
+        val resultId = msg.resultId
+            .toInt(10)
+
+        val results = this.results[resultId]
+            ?: throw IllegalArgumentException("Illegal result instance: $resultId")
+
+        try {
+            val nextResult = results.removeFirst()
+            ctx.writeAndFlush(CommandResponse(RecordResponse(nextResult)))
+        } catch (ex: NoSuchElementException) {
+            this.results.remove(resultId)
+            ctx.writeAndFlush(CommandResponse(NullRecordResponse))
+        }
     }
 
     override fun channelInactive(ctx: ChannelHandlerContext) {
