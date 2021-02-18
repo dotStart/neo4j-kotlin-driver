@@ -1,0 +1,32 @@
+name: Testkit
+
+on: push
+
+jobs:
+  testkit:
+    name: Evaluate driver against testkit
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout driver
+        uses: actions/checkout@v2
+      - name: Checkout testkit
+        uses: actions/checkout@v2
+        with:
+          repository: 'neo4j-drivers/testkit'
+          path: testkit-dist
+          ref: '4.3'
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 15
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Run Testkit
+        env:
+          TEST_DRIVER_NAME: kotlin
+          TEST_DRIVER_REPO: ${{ github.workspace }}
+        working-directory: testkit-dist
+        run: python main.py
