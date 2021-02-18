@@ -41,7 +41,7 @@ class Driver(
     }
 
     init {
-        require(uri.scheme == "bolt") { "Only bolt:// protocol is supported at the moment, sorry :(" }
+        require(uri.scheme == "bolt" || uri.scheme == "neo4j") { "Expected bolt:// or neo4j:// scheme" }
         require((this.username == null && this.password == null) || (this.username != null && this.password != null)) {
             "Invalid credential pair: Must specify both username and password or omit both"
         }
