@@ -1,4 +1,4 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.error
+package com.neo4j.driver.kotlin.network.protocol.bolt40.error
 
 import com.neo4j.driver.kotlin.network.protocol.error.ErrorCategory.SECURITY
 import com.neo4j.driver.kotlin.network.protocol.error.ErrorClassification.CLIENT_ERROR

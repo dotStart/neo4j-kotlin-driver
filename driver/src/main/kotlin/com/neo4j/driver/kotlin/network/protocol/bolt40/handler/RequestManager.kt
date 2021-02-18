@@ -1,9 +1,9 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.handler
+package com.neo4j.driver.kotlin.network.protocol.bolt40.handler
 
 import com.neo4j.driver.kotlin.error.DriverConnectionException
-import com.neo4j.driver.kotlin.network.protocol.bolt42.message.response.FailureMessage
-import com.neo4j.driver.kotlin.network.protocol.bolt42.message.response.IgnoredMessage
-import com.neo4j.driver.kotlin.network.protocol.bolt42.message.response.SuccessMessage
+import com.neo4j.driver.kotlin.network.protocol.bolt40.message.response.FailureMessage
+import com.neo4j.driver.kotlin.network.protocol.bolt40.message.response.IgnoredMessage
+import com.neo4j.driver.kotlin.network.protocol.bolt40.message.response.SuccessMessage
 import com.neo4j.driver.kotlin.network.protocol.error.ProtocolOperationException
 import com.neo4j.driver.kotlin.network.protocol.error.ProtocolStateException
 import io.netty.channel.Channel

@@ -1,4 +1,4 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.message.request.streaming
+package com.neo4j.driver.kotlin.network.protocol.bolt40.message.request.streaming
 
 import com.neo4j.driver.kotlin.packstream.mapper.annotation.PackstreamProperty
 import com.neo4j.driver.kotlin.packstream.mapper.annotation.PackstreamStructure

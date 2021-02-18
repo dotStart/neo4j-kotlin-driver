@@ -1,4 +1,4 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.message.response
+package com.neo4j.driver.kotlin.network.protocol.bolt40.message.response
 
 import com.neo4j.driver.kotlin.packstream.mapper.annotation.PackstreamStructure
 

@@ -1,4 +1,4 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.handler
+package com.neo4j.driver.kotlin.network.protocol.bolt40.handler
 
 data class OperationResult<V>(
 

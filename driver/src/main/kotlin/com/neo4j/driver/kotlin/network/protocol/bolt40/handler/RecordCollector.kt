@@ -1,6 +1,6 @@
-package com.neo4j.driver.kotlin.network.protocol.bolt42.handler
+package com.neo4j.driver.kotlin.network.protocol.bolt40.handler
 
-import com.neo4j.driver.kotlin.network.protocol.bolt42.message.request.streaming.RecordMessage
+import com.neo4j.driver.kotlin.network.protocol.bolt40.message.request.streaming.RecordMessage
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelInboundHandlerAdapter
 
