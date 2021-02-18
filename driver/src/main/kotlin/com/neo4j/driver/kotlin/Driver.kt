@@ -86,7 +86,13 @@ class Driver(
 
         val negotiatedProtocol = handshake.negotiatedVersion
             .takeIf { it != ProtocolVersion.unsupported }
-            ?.let { versionMap[it] }
+            ?.let {
+                versionMap[it]
+                    ?: versionMap
+                        .entries
+                        .firstOrNull { (version, _) -> handshake.negotiatedVersion in version }
+                        ?.value
+            }
             ?: throw DriverConnectionException("Failed to establish connection to $address: No supported protocol dialect negotiated")
 
         handshake.apply { logger.info("Negotiated protocol version $negotiatedVersion") }
