@@ -82,6 +82,7 @@ class Driver(
         val handshake = channel.await<ServerHandshakePacket> {
             it.writeAndFlush(ClientHandshakePacket(supportedVersions = versionMap.keys.toList()))
         }
+        logger.debug("Server negotiated protocol version ${handshake.negotiatedVersion}")
 
         val negotiatedProtocol = handshake.negotiatedVersion
             .takeIf { it != ProtocolVersion.unsupported }
