@@ -48,7 +48,7 @@ inline class ProtocolVersion(val value: Int) : Comparable<ProtocolVersion> {
             return this == other
         }
 
-        return this.major == other.major && this.minor in this.minor..(this.minor + this.range)
+        return this.major == other.major && this.minor in (this.minor - this.range)..this.minor
     }
 
     override fun compareTo(other: ProtocolVersion): Int {
